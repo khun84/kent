@@ -46,14 +46,13 @@ ActiveRecord::Schema.define(version: 2019_12_13_063010) do
 
   create_table "service_requests", force: :cascade do |t|
     t.bigint "premise_id"
+    t.bigint "user_id"
     t.datetime "require_at"
     t.datetime "completed_at"
     t.integer "status"
     t.bigint "vendor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["premise_id"], name: "index_service_requests_on_premise_id"
-    t.index ["vendor_id"], name: "index_service_requests_on_vendor_id"
   end
 
   create_table "users", force: :cascade do |t|
