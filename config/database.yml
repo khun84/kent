@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
+  host: "postgres://pxfacuxtnschyw:3565356b078fc8ddaed4f54655461b5c174d71eeac2postgres://pxfacuxtnschyw:3565356b078fc8ddaed4f54655461b5c174d71eeac2"
   database: kent_production
   username: kent
   password: <%= ENV['KENT_DATABASE_PASSWORD'] %>
