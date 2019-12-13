@@ -10,4 +10,6 @@ Rails.application.routes.draw do
     resources :premises, only: :index
     resources :activity_feeds, only: :index
   end
+
+  resources :premises, only: [:index, :update]
 end
