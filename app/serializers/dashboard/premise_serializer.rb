@@ -1,3 +1,3 @@
 class Dashboard::PremiseSerializer < ActiveModel::Serializer
-  attributes :name
+  attributes :name, :image_url
 end
