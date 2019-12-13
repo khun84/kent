@@ -36,7 +36,24 @@ user_3 = User.create(
   primary: false
 )
 
-# Seed premmises
+# Seed service types
+service_types = [
+  ["Renovation", "https://images.unsplash.com/photo-1505798577917-a65157d3320a?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"],
+  ["Cleaning", "https://as1.ftcdn.net/jpg/02/07/87/26/500_F_207872694_GXB8lLiCdlHyV0Pyq8863MpN7HXFAGCH.jpg"],
+  ["Plumbing", "https://as2.ftcdn.net/jpg/02/16/28/29/500_F_216282910_yjxZDV8zDD2FaaBzxaQcNBhFMnmpuoFj.jpg"],
+  ["Pest", "https://as1.ftcdn.net/jpg/02/58/38/08/500_F_258380829_bVnmzw13cuqtaSB0vPTfrggQjoEfp8lG.jpg"],
+  ["Courier", "https://as1.ftcdn.net/jpg/02/95/78/66/500_F_295786658_6xKWXMiEcGUKlxPSNb6bQhvisIPGFBvC.jpg"],
+  ["Electric", "https://as2.ftcdn.net/jpg/02/77/44/49/500_F_277444954_bjewsE0rSMdo0QiBdsAUWCjZW7cYBXfd.jpg"]
+]
+
+service_types.each do |name, url|
+  ServiceType.create(
+    name: name,
+    url: url
+  )
+end
+
+# Seed premises
 
 premise_1 = Premise.create(
   name: Faker::Address.name,
