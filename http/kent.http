@@ -20,3 +20,6 @@ GET http://localhost:3000/dashboard/service_requests/stat.json
 ###
 GET http://localhost:3000/dashboard/activity_feeds.json
 ###
+GET http://kenterprise.herokuapp.com/dashboard/activity_feeds.json
+
+###

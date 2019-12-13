@@ -17,17 +17,6 @@ class Dashboard::ActivityFeedsController < ApplicationController
   end
 
   def activities_feed
-    [
-      ActivityFeed.new(detail: Faker::Lorem.sentence, activity_type: activity_type, created_at: rand(10).days.ago),
-      ActivityFeed.new(detail: Faker::Lorem.sentence, activity_type: activity_type, created_at: rand(10).days.ago),
-      ActivityFeed.new(detail: Faker::Lorem.sentence, activity_type: activity_type, created_at: rand(10).days.ago),
-      ActivityFeed.new(detail: Faker::Lorem.sentence, activity_type: activity_type, created_at: rand(10).days.ago),
-      ActivityFeed.new(detail: Faker::Lorem.sentence, activity_type: activity_type, created_at: rand(10).days.ago),
-      ActivityFeed.new(detail: Faker::Lorem.sentence, activity_type: activity_type, created_at: rand(10).days.ago)
-    ].sort_by(&:created_at).reverse
-  end
-
-  def activity_type
-    rand > 0.5 ? :request : :payment
+    ActivityFeed.all.order(created_at: :desc).take(DASHBOARD_ACTIVITIES_FEED_COUNT)
   end
 end
