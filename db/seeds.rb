@@ -135,6 +135,8 @@ def foo
   attrs
 end
 
+service_types = ServiceType.all
+
 rand(20).times do
   attr = foo
   ServiceRequest.create(
@@ -144,6 +146,7 @@ rand(20).times do
     completed_at: attr.req_completed_at,
     status: attr.req_status,
     vendor: vendors.sample(1).first,
+    service_type: service_types.sample(1).first,
     bill: Bill.new(
       amount: attr.bill_amount,
       status: attr.bill_status,
@@ -164,6 +167,7 @@ rand(20).times do
     completed_at: attr.req_completed_at,
     status: attr.req_status,
     vendor: vendors.sample(1).first,
+    service_type: service_types.sample(1).first,
     bill: Bill.new(
       amount: attr.bill_amount,
       status: attr.bill_status,
@@ -184,6 +188,7 @@ rand(20).times do
     completed_at: attr.req_completed_at,
     status: attr.req_status,
     vendor: vendors.sample(1).first,
+    service_type: service_types.sample(1).first,
     bill: Bill.new(
       amount: attr.bill_amount,
       status: attr.bill_status,
