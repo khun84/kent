@@ -6,6 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+models = [ServiceRequest, User, Organization, ServiceType, Bill, ActivityFeed, Premise, Vendor]
+
+ServiceRequest.transaction do
+  models.each do |m|
+    m.delete_all
+  end
+end
+
 organization = Organization.create(name: 'Foo', address: Faker::Address.full_address)
 
 # Seed users
@@ -54,32 +62,59 @@ service_types.each do |name, url|
 end
 
 # Seed premises
+#
+premise_datas = [
+  {
+    name: 'Uptown',
+    image_url: 'https://material-ui.com/static/images/grid/complex.jpg'
+  },
+  {
+    name: 'TTDI',
+    image_url: 'https://material-ui.com/static/images/grid/complex.jpg'
+  },
+  {
+    name: 'Sunway',
+    image_url: 'https://material-ui.com/static/images/grid/complex.jpg'
+  },
+  {
+    name: 'Bandar Utama',
+    image_url: 'https://material-ui.com/static/images/grid/complex.jpg'
+  },
+  {
+    name: 'Puchong',
+    image_url: 'https://material-ui.com/static/images/grid/complex.jpg'
+  }
+]
 
 premise_1 = Premise.create(
-  name: Faker::Address.name,
+  name: premise_datas[0][:name],
   address: Faker::Address.full_address,
   organization: organization,
+  image_url: premise_datas[0][:image_url],
   user: user_1
 )
 
 premise_2 = Premise.create(
-  name: Faker::Address.name,
+  name: premise_datas[1][:name],
   address: Faker::Address.full_address,
   organization: organization,
+  image_url: premise_datas[1][:image_url],
   user: user_1
 )
 
 premise_3 = Premise.create(
-  name: Faker::Address.name,
+  name: premise_datas[2][:name],
   address: Faker::Address.full_address,
   organization: organization,
+  image_url: premise_datas[2][:image_url],
   user: user_2
 )
 
 premise_4 = Premise.create(
-  name: Faker::Address.name,
+  name: premise_datas[3][:name],
   address: Faker::Address.full_address,
   organization: organization,
+  image_url: premise_datas[3][:image_url],
   user: user_3
 )
 
@@ -197,3 +232,60 @@ rand(20).times do
     )
   )
 end
+
+# Seed activity feed
+
+## new request
+all_requests = ServiceRequest.includes(:premise, :service_type).all
+all_requests.each do |sr|
+  ActivityFeed.create(
+    detail: "New request #{sr.service_type.name} @ #{sr.premise.name}",
+    created_at: sr.created_at,
+    updated_at: sr.created_at,
+    activity_type: :request
+  )
+end
+
+## request completed
+all_requests.select {|sr| sr.completed?}.each do |sr|
+  ActivityFeed.create(
+    detail: "Request #{sr.service_type.name} @ #{sr.premise.name} has been completed.",
+    created_at: sr.completed_at,
+    updated_at: sr.completed_at,
+    activity_type: :request
+  )
+end
+
+## request overdue
+all_requests.select {|sr| !sr.completed? && Time.current > sr.require_at}.each do |sr|
+  ActivityFeed.create(
+    detail: "Request #{sr.service_type.name} @ #{sr.premise.name} has passed service date.",
+    created_at: sr.require_at + 1.day,
+    updated_at: sr.require_at + 1.day,
+    activity_type: :request
+  )
+end
+
+include ActionView::Helpers::NumberHelper
+
+currency = "MYR "
+## payment due
+Bill.includes(service_request: [:service_type, :premise]).overdue.each do |bill|
+  ActivityFeed.create(
+    detail: "Bill #{number_to_currency(bill.amount, precision: 0, unit: currency)} for #{bill.service_request.service_type.name} @ #{bill.service_request.premise.name} is overdued.",
+    created_at: bill.due_at,
+    updated_at: bill.due_at,
+    activity_type: :payment
+  )
+end
+
+## payment made
+Bill.includes(service_request: [:service_type, :premise]).paid.each do |bill|
+  ActivityFeed.create(
+    detail: "Bill #{number_to_currency(bill.amount, precision: 0, unit: currency)} for #{bill.service_request.service_type.name} @ #{bill.service_request.premise.name} has been paid.",
+    created_at: bill.paid_at,
+    updated_at: bill.paid_at,
+    activity_type: :payment
+  )
+end
+
