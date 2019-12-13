@@ -4,5 +4,5 @@ class ServiceRequest < ApplicationRecord
   belongs_to :vendor
   has_one :bill
 
-  enum status: { pending: 0, in_progress: 10, completed: 20 }
+  enum status: { pending: 1, in_progress: 10, completed: 20 }
 end
