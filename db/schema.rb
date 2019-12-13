@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_140554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activities_feeds", force: :cascade do |t|
+  create_table "activity_feeds", force: :cascade do |t|
     t.string "detail"
     t.integer "activity_type"
     t.datetime "created_at", null: false
