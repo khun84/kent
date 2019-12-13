@@ -6,6 +6,8 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-GET http://localhost:3000/dashboard/service_requests/1.json
+GET http://localhost:3000/dashboard/service_requests.json
+###
+GET http://localhost:3000/dashboard/service_types.json
 
 ###

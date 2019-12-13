@@ -1,6 +1,6 @@
 class Dashboard::ServiceRequestsController < ApplicationController
   TOP_N_REQUESTS = 3
-  def show
+  def index
     render json: payload, status: :ok
   end
 
