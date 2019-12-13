@@ -8,6 +8,10 @@
 
 GET http://localhost:3000/dashboard/service_requests.json
 ###
+GET http://kenterprise.herokuapp.com/dashboard/service_requests.json
+###
 GET http://localhost:3000/dashboard/service_types.json
 
+###
+GET http://localhost:3000/dashboard/premises.json
 ###
