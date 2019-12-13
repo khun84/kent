@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   namespace :dashboard do
     resources :service_requests, only: :index
     resources :service_types, only: :index
+    resources :premises, only: :index
   end
 end
