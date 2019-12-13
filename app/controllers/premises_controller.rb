@@ -31,9 +31,10 @@ class PremisesController < ApplicationController
   end
 
   def update_params
-    {
-      image_url: params[:image_url],
-      name: params[:name]
-    }.reject {|_, v| v.blank?}
+    params.permit(
+      :image_url,
+      :name,
+      :address
+    ).to_h.reject { |_, v| v.blank? }
   end
 end

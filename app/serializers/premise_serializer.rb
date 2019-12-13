@@ -1,3 +1,3 @@
 class PremiseSerializer < ActiveModel::Serializer
-  attributes :name, :image_url, :id
+  attributes :name, :image_url, :id, :address
 end
