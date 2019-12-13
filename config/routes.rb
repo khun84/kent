@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     end
     resources :service_types, only: :index
     resources :premises, only: :index
+    resources :activity_feeds, only: :index
   end
 end

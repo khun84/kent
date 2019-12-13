@@ -1,3 +1,3 @@
-class Dashboard::ServiceTypeSerializer < ActiveModel::Serializer
-  attributes :name, :url
+class Dashboard::ActivityFeedSerializer < ActiveModel::Serializer
+  attributes :detail, :activity_type, :created_at
 end
